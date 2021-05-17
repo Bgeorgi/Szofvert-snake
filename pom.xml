@@ -27,14 +27,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
         <maven.compiler.release>15</maven.compiler.release>
-        <exec.mainClass>org.example.App</exec.mainClass>
+        <exec.mainClass>snake.App</exec.mainClass>
         <exec.cleanupDaemonThreads>false</exec.cleanupDaemonThreads>
-        <javafx.version>15</javafx.version>
+        <javafx.version>15.0.1</javafx.version>
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
         <jacoco.version>0.8.7</jacoco.version>
         <surefire.version>3.0.0-M5</surefire.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi3-sqlobject</artifactId>
+            <version>3.20.0</version>
+        </dependency>
         <dependency>
             <groupId>org.tinylog</groupId>
             <artifactId>tinylog-api</artifactId>
@@ -48,10 +53,9 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.200</version>
-            <scope>runtime</scope>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.24</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -196,9 +200,6 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <filters>
-            <filter>db.properties</filter>
-        </filters>
     </build>
     <reporting>
         <plugins>
@@ -214,11 +215,10 @@
                     </reportSet>
                 </reportSets>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.0.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

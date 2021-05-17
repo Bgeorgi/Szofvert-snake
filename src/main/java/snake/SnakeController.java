@@ -1,0 +1,262 @@
+package snake;
+
+
+import Data.Result;
+import Data.ResultDao;
+import javafx.scene.control.TextField;
+import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+import snake.Direction;
+import snake.GameState;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
+
+import org.tinylog.Logger;
+
+import java.time.LocalDateTime;
+
+
+public class SnakeController  {
+
+    @FXML
+    private Label scoreLabel;
+
+    @FXML
+    private Label highScoreLabel;
+
+    @FXML
+    private Pane grid;
+
+    @FXML
+    private Label gameOver;
+
+    @FXML
+    private Label PlayerName;
+
+    ResultDao dao;
+
+
+
+    private GridPane gridPane;
+    private GameState gameState;
+    private Direction direction;
+    private Timeline timeline;
+
+
+    private static int statichighscore=0;
+
+    public void setPlayerName(String name) {
+
+         this.PlayerName.setText(name);
+    }
+
+    @FXML
+    public void initialize() {
+        generateGridPane();
+
+        try {
+            Jdbi jdbi = Jdbi.create("jdbc:h2:mem:test");
+            jdbi.installPlugin(new SqlObjectPlugin());
+            Handle handle = jdbi.open();
+            dao = handle.attach(ResultDao.class);
+            dao.createTable();
+        } catch (Exception e){
+            System.out.println("Database problem!");
+        }
+    }
+
+
+
+    public void startGame() throws InterruptedException {
+        clearSnakeSpeed();
+        this.gameState = new GameState();
+        gameOver.setVisible(false);
+        renderSnake();
+        SnakeMoveManager();
+        direction = new Direction("D", "A");
+
+       /*if(this.score!=null){
+            highScoreLabel.setText(String.valueOf(score.getScore()));
+        }
+
+        */
+
+
+
+        Logger.info("Start button is clicked");
+    }
+
+    private void SnakeMoveManager() {
+        this.timeline = new Timeline(new KeyFrame(Duration.millis(130), new EventHandler<ActionEvent>() {
+
+            private int i = 1;
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (gameState.isOver() == false) {
+                    gameState.moveSnake(direction.getDirection());
+                    renderSnake();
+                }
+            }
+        }));
+        this.timeline.setCycleCount(Timeline.INDEFINITE);
+        this.timeline.play();
+    }
+
+    private void clearSnakeSpeed() {
+        if (this.timeline != null) {
+            this.timeline.stop();
+            this.timeline.getKeyFrames().clear();
+            this.timeline = null;
+        }
+    }
+
+    private void generateGridPane() {
+        gridPane = new GridPane();
+        gridPane.setPrefWidth(700);
+        gridPane.setPrefHeight(500);
+        gridPane.setGridLinesVisible(true);
+        gridPane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.THICK)));
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 26; j++) {
+                Label label = new Label();
+                label.setId(createID(i, j));
+                label.setPrefHeight(500 / 20.0);
+                label.setPrefWidth(700 / 26.0);
+                gridPane.addRow(i, label);
+            }
+        }
+        grid.getChildren().add(gridPane);
+    }
+
+    public String createID(int col, int row) {
+        return String.valueOf(row) + "_" + String.valueOf(col);
+    }
+
+    private void renderSnake() {
+        setScoreLabel();
+        Node label;
+        String id;
+        int[][] state = gameState.getGameState();
+        clearCells();
+        try {
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 26; j++) {
+                    if (state[i][j] != 0) {
+                        id = createID(i, j);
+                        String finalId = id;
+                        label = (Label) gridPane.getChildren().stream()
+                                .filter(x -> x.getId() != null)
+                                .filter(x -> x.getId().equals(finalId))
+                                .findFirst()
+                                .get();
+                        if (state[i][j] != -1) label.setStyle("-fx-background-color: black;");
+                        else label.setStyle("-fx-background-color: red;");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            gameOver.setVisible(true);
+           /* if(score == null){
+                HighScore newScore=new HighScore(this.game, this.name1, gameState.getScore());
+                database.persist(newScore);
+                highScoreLabel.setText(String.valueOf(gameState.getScore()));
+            }
+            else if (gameState.getScore() > score.getScore()) {
+                database.update(score, gameState.getScore(), this.name1);
+                log.info("Highscore saved. {}",gameState.getScore());
+                highScoreLabel.setText(String.valueOf(gameState.getScore()));
+            }
+
+            */
+
+        }
+    }
+
+    public void snakeMove(KeyEvent keyEvent) {
+        KeyCode code = keyEvent.getCode();
+        String opposite = null;
+        String dir = code.toString();
+        if (direction.getOpposite() != dir) {
+            switch (dir) {
+                case "W":
+                    opposite = "S";
+                    break;
+                case "A":
+                    opposite = "D";
+                    break;
+                case "S":
+                    opposite = "W";
+                    break;
+                case "D":
+                    opposite = "A";
+                    break;
+            }
+            direction = new Direction(dir, opposite);
+        }
+    }
+
+    public void clearCells() {
+        for (Node label : gridPane.getChildren()) {
+            label.setStyle("");
+        }
+    }
+
+    public void setScoreLabel() {
+        scoreLabel.setText(String.valueOf(gameState.getScore()));
+    }
+
+    public void setHighScore(){
+        if (statichighscore<gameState.getScore()){
+            statichighscore=gameState.getScore();
+        }
+    }
+/*
+    public void setScore() {
+        gameScore.setText("Score: " + gameState.getScore());
+    }
+
+    public void setResult() {
+
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        int second = now.getSecond();
+
+        String timenow = year + "-" + month + "-" + day + "  " + hour + ":" + minute + ":" + (10>second ? "0" + second : second);
+
+        Result result = Result.builder()
+                .player(userName)
+                .score(gameState.getScore())
+                .date(timenow).build();
+
+        Long idd = dao.insert(result);
+
+        setHighScore();
+        System.out.println("Új sor a táblába: " + dao.findById(idd));
+    }
+
+ */
+
+    public void switchToMenu(MouseEvent event) throws Exception {
+        PageLoader.loadMenu(event);
+        Logger.info("Back button is clicked.");
+    }
+
+
+}

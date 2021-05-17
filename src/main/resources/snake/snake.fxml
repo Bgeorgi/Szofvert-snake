@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="mainPane" onKeyPressed="#snakeMove" prefHeight="700.0" prefWidth="900.0" style="-fx-background-image: url('/images/background.jpg');" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake.SnakeController">
+    <children>
+        <Label fx:id="scoreLabel" layoutX="237.0" layoutY="74.0" prefHeight="35.0" prefWidth="215.0" style=" -fx-text-fill: black;">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+            <effect>
+                <DropShadow spread="0.3">
+               <color>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </color></DropShadow>
+            </effect>
+        </Label>
+
+        <Label layoutX="100.0" layoutY="109.0" style=" -fx-text-fill: black;" text="High Score:">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+            <effect>
+                <DropShadow spread="0.3">
+                    <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                    </color>
+                </DropShadow>
+            </effect>
+        </Label>
+        <Label layoutX="100.0" layoutY="74.0" prefHeight="35.0" prefWidth="222.0" style=" -fx-text-fill: black;" text="Score:">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+            <effect>
+                <DropShadow spread="0.3">
+                    <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                    </color>
+                </DropShadow>
+            </effect>
+        </Label>
+        <Label fx:id="highScoreLabel" layoutX="237.0" layoutY="109.0" prefHeight="35.0" prefWidth="200.0" style=" -fx-text-fill: black;">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+            <effect>
+                <DropShadow spread="0.3">
+               <color>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </color></DropShadow>
+            </effect>
+        </Label>
+        <Button fx:id="start" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#startGame" prefHeight="33.0" prefWidth="80.0" style="-fx-background-color: brown;" text="START" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+            <effect>
+                <DropShadow>
+                    <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                    </color>
+                </DropShadow>
+            </effect>
+        </Button>
+      <Pane fx:id="grid" layoutX="100.0" layoutY="161.0" prefHeight="500.0" prefWidth="700.5" style="-fx-background-color: green;" />
+      <Label fx:id="gameOver" alignment="CENTER" contentDisplay="CENTER" layoutX="238.0" layoutY="375.0" prefHeight="50.0" prefWidth="400.0" text="!!! GAME OVER !!!" textAlignment="CENTER" textFill="RED" visible="false">
+         <font>
+            <Font size="39.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Label>
+      <Button fx:id="back" layoutX="806.0" layoutY="44.0" mnemonicParsing="false" onMouseClicked="#switchToMenu" prefHeight="33.0" prefWidth="80.0" style="-fx-background-color: brown;" text="Back" textFill="WHITE" />
+      <Label fx:id="PlayerName" alignment="CENTER" layoutX="348.0" layoutY="29.0" prefHeight="30.0" prefWidth="208.0" style="-fx-background-color: white; -fx-border-color: black;" text="Name" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+    </children>
+</Pane>

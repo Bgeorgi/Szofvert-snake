@@ -1,4 +1,6 @@
-/home/george/Desktop/Snake/snake/src/main/java/org/example/SecondaryController.java
-/home/george/Desktop/Snake/snake/src/main/java/module-info.java
-/home/george/Desktop/Snake/snake/src/main/java/org/example/PrimaryController.java
-/home/george/Desktop/Snake/snake/src/main/java/org/example/App.java
+/home/george/Desktop/Snake/snake/src/main/java/snake/App.java
+/home/george/Desktop/Snake/snake/src/main/java/snake/GameState.java
+/home/george/Desktop/Snake/snake/src/main/java/snake/SnakeController.java
+/home/george/Desktop/Snake/snake/src/main/java/snake/Step.java
+/home/george/Desktop/Snake/snake/src/main/java/snake/Direction.java
+/home/george/Desktop/Snake/snake/src/main/java/snake/Main.java
