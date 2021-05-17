@@ -1,10 +1,11 @@
 package Data;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Generated;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -14,36 +15,67 @@ import java.util.Date;
  */
 
 
-@Builder
 @Data
+@Entity
+@Builder
 public class Result {
 
     /*
-     * A játékos sorszáma.
+     * A játékos id.
      */
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+     private long id;
 
     /*
      * A játékos neve.
      */
-    private String player;
+    @Column(nullable = false)
+     private String player;
 
 
     /*
      * A játékos által elért pontszám.
      */
-    private int score;
-
-    /*
-     * Mikor fejezte be a játékot.
-     */
-    private String date;
+    @Column(nullable = false)
+     private int score;
 
 
-    public Result(Long id, String player, int score, String date) {
+
+    public Result(){
+
+    }
+
+    public Result(long id, String player, int score) {
         this.id = id;
         this.player = player;
         this.score = score;
-        this.date = date;
+
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+
 }

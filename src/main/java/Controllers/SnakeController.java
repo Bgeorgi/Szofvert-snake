@@ -1,9 +1,8 @@
-package snake;
+package Controllers;
 
-
+import Data.DataConnection;
 import Data.Result;
-import Data.ResultDao;
-import javafx.scene.control.TextField;
+import Data.ResultRepository;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
@@ -23,9 +22,16 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+
 import org.tinylog.Logger;
 
-import java.time.LocalDateTime;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.Date;
+
 
 
 public class SnakeController  {
@@ -45,7 +51,7 @@ public class SnakeController  {
     @FXML
     private Label PlayerName;
 
-    ResultDao dao;
+
 
 
 
@@ -60,26 +66,24 @@ public class SnakeController  {
     public void setPlayerName(String name) {
 
          this.PlayerName.setText(name);
+
     }
+
+    ResultRepository resultRepository = new ResultRepository();
 
     @FXML
     public void initialize() {
-        generateGridPane();
 
-        try {
-            Jdbi jdbi = Jdbi.create("jdbc:h2:mem:test");
-            jdbi.installPlugin(new SqlObjectPlugin());
-            Handle handle = jdbi.open();
-            dao = handle.attach(ResultDao.class);
-            dao.createTable();
-        } catch (Exception e){
-            System.out.println("Database problem!");
-        }
+     //   DataConnection.openEmf();
+        generateGridPane();
+        fromData();
+
     }
 
 
 
     public void startGame() throws InterruptedException {
+        fromData();
         clearSnakeSpeed();
         this.gameState = new GameState();
         gameOver.setVisible(false);
@@ -169,7 +173,10 @@ public class SnakeController  {
             }
         } catch (Exception e) {
             gameOver.setVisible(true);
-           /* if(score == null){
+            toData();
+
+
+         /*  if(score == null){
                 HighScore newScore=new HighScore(this.game, this.name1, gameState.getScore());
                 database.persist(newScore);
                 highScoreLabel.setText(String.valueOf(gameState.getScore()));
@@ -180,10 +187,11 @@ public class SnakeController  {
                 highScoreLabel.setText(String.valueOf(gameState.getScore()));
             }
 
-            */
+          */
 
         }
-    }
+
+     }
 
     public void snakeMove(KeyEvent keyEvent) {
         KeyCode code = keyEvent.getCode();
@@ -221,6 +229,36 @@ public class SnakeController  {
     public void setHighScore(){
         if (statichighscore<gameState.getScore()){
             statichighscore=gameState.getScore();
+        }
+    }
+
+    public void toData(){
+
+        Result newResult = new Result();
+
+        newResult.setPlayer(PlayerName.getText());
+        newResult.setScore(gameState.getScore());
+
+        resultRepository.AddNewTask(newResult);
+
+
+    }
+
+    public void fromData(){
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/ylm1Jk7dKv", "ylm1Jk7dKv", "XL6vysANrr");
+            String sql = "select max(score) from Result";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int max = 0;
+            if (resultSet.next()){
+                 max = resultSet.getInt(1);
+            }
+
+            highScoreLabel.setText(String.valueOf(max));
+            Logger.trace(max );
+        } catch (Exception e) {
+            Logger.error("fromData error");
         }
     }
 /*

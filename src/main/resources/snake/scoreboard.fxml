@@ -3,12 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20.0" style="-fx-background-image: url('/images/background.jpg');" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake.ScoreController">
+<VBox alignment="CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20.0" style="-fx-background-image: url('/images/background.jpg');" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ScoreController">
     <children>
       <Pane prefHeight="700.0" prefWidth="900.0">
          <children>
@@ -22,7 +23,12 @@
                   <Font name="System Bold" size="32.0" />
                </font>
             </Label>
-            <TextArea fx:id="DataScore" layoutX="30.0" layoutY="222.0" prefHeight="400.0" prefWidth="800.0" />
+            <TableView fx:id="table" layoutX="9.0" layoutY="183.0" prefHeight="447.0" prefWidth="838.0">
+              <columns>
+                <TableColumn fx:id="tablePlayer" prefWidth="458.0" text="Player" />
+                <TableColumn fx:id="tableScore" minWidth="0.0" prefWidth="379.0" text="Score" />
+              </columns>
+            </TableView>
          </children>
       </Pane>
     </children>

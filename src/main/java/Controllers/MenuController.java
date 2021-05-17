@@ -1,29 +1,23 @@
-package snake;
+package Controllers;
 
-import Data.Result;
-import Data.ResultDao;
+import Data.DataConnection;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
-import org.tinylog.Logger;
 
-import javax.swing.*;
+import org.tinylog.Logger;
 
 
 public class MenuController {
 
     @FXML
     private TextField nameField;
+
+    public void initialize(){
+        DataConnection.openEmf();
+    }
 
 
     public void startGame(MouseEvent event) throws IOException {

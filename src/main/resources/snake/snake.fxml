@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPane" onKeyPressed="#snakeMove" prefHeight="700.0" prefWidth="900.0" style="-fx-background-image: url('/images/background.jpg');" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake.SnakeController">
+<Pane fx:id="mainPane" onKeyPressed="#snakeMove" prefHeight="700.0" prefWidth="900.0" style="-fx-background-image: url('/images/background.jpg');" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SnakeController">
     <children>
         <Label fx:id="scoreLabel" layoutX="237.0" layoutY="74.0" prefHeight="35.0" prefWidth="215.0" style=" -fx-text-fill: black;">
             <font>
@@ -45,7 +45,7 @@
                 </DropShadow>
             </effect>
         </Label>
-        <Label fx:id="highScoreLabel" layoutX="237.0" layoutY="109.0" prefHeight="35.0" prefWidth="200.0" style=" -fx-text-fill: black;">
+        <Label fx:id="highScoreLabel" layoutX="297.0" layoutY="109.0" prefHeight="35.0" prefWidth="200.0" style=" -fx-text-fill: black;">
             <font>
                 <Font name="System Bold" size="24.0" />
             </font>

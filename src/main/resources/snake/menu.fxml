@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20.0" style="-fx-background-image: url('/images/background.jpg');" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake.MenuController">
+<VBox alignment="CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20.0" style="-fx-background-image: url('/images/background.jpg');" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MenuController">
    <children>
       <Pane prefHeight="700.0" prefWidth="900.0">
          <children>
