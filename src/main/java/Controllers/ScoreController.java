@@ -51,8 +51,11 @@ public class ScoreController {
 
         }
 
+
     /**
-     * Back button.
+     *
+     * @param event Back button pressed.
+     * @throws IOException
      */
     public void switchToMenu(MouseEvent event) throws IOException {
         Logger.info("Back clicked");

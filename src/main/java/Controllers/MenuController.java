@@ -19,14 +19,17 @@ public class MenuController {
      * Initialize Database
      */
 
+
     public void initialize(){
         DataConnection.openEmf();
         Logger.info("Database is running");
     }
 
+
     /**
-     * Start game button.
      * Receive player name, if empty auto fill with name "Anonymous"
+     * @param event Start game button.
+     * @throws IOException
      */
     public void startGame(MouseEvent event) throws IOException {
         try {
@@ -43,8 +46,11 @@ public class MenuController {
         }
     }
 
+
     /**
-     * Score button.
+     *
+     * @param event Score button pressed
+     * @throws IOException
      */
     public void switchToScore(MouseEvent event) throws IOException {
         Logger.info("Score clicked");

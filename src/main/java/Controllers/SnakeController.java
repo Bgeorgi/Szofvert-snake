@@ -53,8 +53,10 @@ public class SnakeController  {
 
     private static int statichighscore=0;
 
+
     /**
-     *Load player name into fxml layer.
+     *
+     * @param name Load player name into fxml layer.
      */
     public void setPlayerName(String name) {
          this.PlayerName.setText(name);
@@ -62,6 +64,7 @@ public class SnakeController  {
     }
 
     ResultRepository resultRepository = new ResultRepository();
+
 
     /**
      * Initialize Snake-game
@@ -73,7 +76,10 @@ public class SnakeController  {
     }
 
 
-
+    /**
+     * Start button pressed , start logic.
+     * @throws InterruptedException
+     */
     public void startGame() throws InterruptedException {
         fromData();
         clearSnakeSpeed();
@@ -88,15 +94,18 @@ public class SnakeController  {
     }
 
 
-
+    /**
+     *  Move snake to direction.
+     *  Set KeyFrame
+     */
     private void SnakeMoveManager() {
         this.timeline = new Timeline(new KeyFrame(Duration.millis(130), new EventHandler<ActionEvent>() {
 
-            private int i = 1;
+
 
             @Override
             public void handle(ActionEvent event) {
-                if (gameState.isOver() == false) {
+                if (!gameState.isOver()) {
                     gameState.moveSnake(direction.getDirection());
                     renderSnake();
                 }
@@ -106,6 +115,7 @@ public class SnakeController  {
         this.timeline.play();
     }
 
+
     private void clearSnakeSpeed() {
         if (this.timeline != null) {
             this.timeline.stop();
@@ -114,6 +124,9 @@ public class SnakeController  {
         }
     }
 
+    /**
+     * Generating grid
+     */
     private void generateGridPane() {
         gridPane = new GridPane();
         gridPane.setPrefWidth(700);
@@ -136,6 +149,9 @@ public class SnakeController  {
         return String.valueOf(row) + "_" + String.valueOf(col);
     }
 
+    /**
+     * Renders in snake
+     */
     private void renderSnake() {
         setScoreLabel();
         Node label;
@@ -166,7 +182,8 @@ public class SnakeController  {
      }
 
     /**
-     *
+     * Sets the opposite of key event.
+     * @param keyEvent  gets key event.
      */
     public void snakeMove(KeyEvent keyEvent) {
         KeyCode code = keyEvent.getCode();
@@ -213,7 +230,6 @@ public class SnakeController  {
 
         newResult.setPlayer(PlayerName.getText());
         newResult.setScore(gameState.getScore());
-
         resultRepository.AddNewResult(newResult);
 
 

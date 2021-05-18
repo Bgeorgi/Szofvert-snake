@@ -17,9 +17,12 @@ import org.tinylog.Logger;
 public class PageLoader {
 
 
+
     /**
-     * Initialize the snake game.
-     * Sets player name in snake.
+     *  Initialize the snake game.
+     * @param mouseEvent
+     * @param name Sets player name in snake.
+     * @throws IOException
      */
     public static void loadGame(MouseEvent mouseEvent, String name) throws IOException {
         Logger.info("Snake is loading");
@@ -33,8 +36,11 @@ public class PageLoader {
 
     }
 
+
     /**
      * Initialize main menu.
+     * @param mouseEvent
+     * @throws IOException
      */
     public static void loadMenu(MouseEvent mouseEvent) throws  IOException{
         Logger.info("Menu is loading");
@@ -45,8 +51,11 @@ public class PageLoader {
 
     }
 
+
     /**
      * Initialize scoreboard.
+     * @param mouseEvent
+     * @throws IOException
      */
     public static void loadScore(MouseEvent mouseEvent) throws IOException{
         Logger.info("ScoreBoard is loading");

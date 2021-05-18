@@ -6,9 +6,7 @@ import javax.persistence.Persistence;
 
 public class DataConnection {
 
-    /**
-     *Connects to the Database
-     */
+
     private DataConnection(){
     }
 
@@ -18,10 +16,16 @@ public class DataConnection {
         return emf.createEntityManager();
     }
 
+    /**
+     * Closes Database
+     */
     public static void closeEmf(){
         emf.close();
     }
 
+    /**
+     *Connects to the Database
+     */
     public static void openEmf(){
         emf.isOpen();
     }

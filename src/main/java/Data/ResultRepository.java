@@ -16,6 +16,7 @@ public class ResultRepository extends DataBase<Result> {
 
     /**
      * Gets database in a list.
+     * @return the created list.
      */
     public List<Result> Query() {
         EntityManager em = DataConnection.getEntityManager();
