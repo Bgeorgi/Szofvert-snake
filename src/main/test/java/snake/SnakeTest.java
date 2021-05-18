@@ -4,11 +4,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.Assert;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class snakeTest {
+class SnakeTest {
 
 
     private Direction direction;
@@ -27,7 +27,7 @@ class snakeTest {
 
 
     @Test
-    public void checkIfCellNotOver() {
+    public void checkIfCellNotOverTest() {
         //cell is over
         Step step = new Step(0, -1, 3);
         assertFalse(step.checkIfCellNotOver());
