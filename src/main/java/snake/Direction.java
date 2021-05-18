@@ -9,19 +9,16 @@ public class Direction {
         this.opposite = opposite;
     }
 
+
     public String getDirection() {
         return direction;
     }
 
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
+    public void setDirection(String direction) { this.direction = direction; }
 
     public String getOpposite() {
         return opposite;
     }
 
-    public void setOpposite(String opposite) {
-        this.opposite = opposite;
-    }
+    public void setOpposite(String opposite) { this.opposite = opposite; }
 }

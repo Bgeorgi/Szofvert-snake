@@ -17,6 +17,10 @@ import org.tinylog.Logger;
 public class PageLoader {
 
 
+    /**
+     * Initialize the snake game.
+     * Sets player name in snake.
+     */
     public static void loadGame(MouseEvent mouseEvent, String name) throws IOException {
         Logger.info("Snake is loading");
         FXMLLoader fxmlLoader= new FXMLLoader(PageLoader.class.getResource("/snake/snake.fxml"));
@@ -28,15 +32,22 @@ public class PageLoader {
         stage.show();
 
     }
+
+    /**
+     * Initialize main menu.
+     */
     public static void loadMenu(MouseEvent mouseEvent) throws  IOException{
         Logger.info("Menu is loading");
-        Parent root= FXMLLoader.load(PageLoader.class.getResource("/snake/menu.fxml"));
+        Parent root= FXMLLoader.load(Objects.requireNonNull(PageLoader.class.getResource("/snake/menu.fxml")));
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
 
     }
 
+    /**
+     * Initialize scoreboard.
+     */
     public static void loadScore(MouseEvent mouseEvent) throws IOException{
         Logger.info("ScoreBoard is loading");
         Parent root = FXMLLoader.load(Objects.requireNonNull(PageLoader.class.getResource("/snake/scoreboard.fxml")));

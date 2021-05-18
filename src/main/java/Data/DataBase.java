@@ -17,7 +17,10 @@ public abstract class DataBase<T> {
                 .getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
-    public void AddNewTask(T entity){
+    /**
+     * Uploads data to the Database
+     */
+    public void AddNewResult(T entity){
         EntityManager em = DataConnection.getEntityManager();
         try{
             em.getTransaction().begin();

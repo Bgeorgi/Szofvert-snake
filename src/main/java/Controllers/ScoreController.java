@@ -2,7 +2,6 @@ package Controllers;
 
 import Data.Result;
 import Data.ResultRepository;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import org.tinylog.Logger;
 
 import java.io.IOException;
-import java.sql.*;
 
 public class ScoreController {
 
@@ -33,11 +31,17 @@ public class ScoreController {
 
     ResultRepository resultRepository = new ResultRepository();
 
+    /**
+     * Initialize scoreboard.
+     */
     public void initialize(){
     getScores();
 
     }
 
+    /**
+     * Load in Database to fxml table.
+     */
     public void getScores() {
 
         ObservableList <Result> data = FXCollections.observableArrayList(resultRepository.Query());
@@ -47,8 +51,11 @@ public class ScoreController {
 
         }
 
-
+    /**
+     * Back button.
+     */
     public void switchToMenu(MouseEvent event) throws IOException {
+        Logger.info("Back clicked");
         PageLoader.loadMenu(event );
     }
 

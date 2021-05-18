@@ -70,19 +70,6 @@ public class GameState {
         this.head[1] = headJ;
     }
 
-    /**
-     * Show the game board.
-     */
-    public void showState() {
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 26; j++) {
-                System.out.print("[ " + gameState[i][j] + " ]");
-                if (j == 25) {
-                    System.out.println();
-                }
-            }
-        }
-    }
 
     /**
      * Generates food on random place and turn the cell's value to -1.
@@ -93,7 +80,7 @@ public class GameState {
         Random rand = new Random();
         int foodCellI;
         int foodCellJ;
-        while (success == false) {
+        while (!success) {
             foodCellI = rand.nextInt(20);
             foodCellJ = rand.nextInt(26);
             if (gameState[foodCellI][foodCellJ] == 0) {

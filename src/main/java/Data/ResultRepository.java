@@ -14,6 +14,9 @@ import java.util.List;
 
 public class ResultRepository extends DataBase<Result> {
 
+    /**
+     * Gets database in a list.
+     */
     public List<Result> Query() {
         EntityManager em = DataConnection.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();

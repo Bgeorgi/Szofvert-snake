@@ -15,29 +15,39 @@ public class MenuController {
     @FXML
     private TextField nameField;
 
+    /**
+     * Initialize Database
+     */
+
     public void initialize(){
         DataConnection.openEmf();
+        Logger.info("Database is running");
     }
 
-
+    /**
+     * Start game button.
+     * Receive player name, if empty auto fill with name "Anonymous"
+     */
     public void startGame(MouseEvent event) throws IOException {
         try {
-            //    log.info("Play button is clicked.");
             Logger.info("Start clicked");
             String name1 = nameField.getText();
             if (!name1.isEmpty()) {
                 PageLoader.loadGame(event, name1);
 
             } else {
-                PageLoader.loadGame(event, "Anonymus");
-                // log.info("Username is set to {}, loading {} scene.","Anonymus");
+                PageLoader.loadGame(event, "Anonymous");
             }
         } catch (Exception e) {
             throw e;
         }
     }
 
+    /**
+     * Score button.
+     */
     public void switchToScore(MouseEvent event) throws IOException {
+        Logger.info("Score clicked");
         PageLoader.loadScore(event);
     }
 }

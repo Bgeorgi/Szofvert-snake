@@ -5,6 +5,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class DataConnection {
+
+    /**
+     *Connects to the Database
+     */
     private DataConnection(){
     }
 

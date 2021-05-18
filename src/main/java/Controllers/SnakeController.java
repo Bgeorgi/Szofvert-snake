@@ -1,11 +1,8 @@
 package Controllers;
 
-import Data.DataConnection;
+
 import Data.Result;
 import Data.ResultRepository;
-import org.jdbi.v3.core.Handle;
-import org.jdbi.v3.core.Jdbi;
-import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import snake.Direction;
 import snake.GameState;
 import javafx.animation.KeyFrame;
@@ -21,16 +18,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-
-
 import org.tinylog.Logger;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.util.Date;
 
 
 
@@ -53,8 +45,6 @@ public class SnakeController  {
 
 
 
-
-
     private GridPane gridPane;
     private GameState gameState;
     private Direction direction;
@@ -63,21 +53,23 @@ public class SnakeController  {
 
     private static int statichighscore=0;
 
+    /**
+     *Load player name into fxml layer.
+     */
     public void setPlayerName(String name) {
-
          this.PlayerName.setText(name);
 
     }
 
     ResultRepository resultRepository = new ResultRepository();
 
+    /**
+     * Initialize Snake-game
+     */
     @FXML
     public void initialize() {
-
-     //   DataConnection.openEmf();
         generateGridPane();
         fromData();
-
     }
 
 
@@ -91,16 +83,11 @@ public class SnakeController  {
         SnakeMoveManager();
         direction = new Direction("D", "A");
 
-       /*if(this.score!=null){
-            highScoreLabel.setText(String.valueOf(score.getScore()));
-        }
-
-        */
-
-
 
         Logger.info("Start button is clicked");
     }
+
+
 
     private void SnakeMoveManager() {
         this.timeline = new Timeline(new KeyFrame(Duration.millis(130), new EventHandler<ActionEvent>() {
@@ -174,25 +161,13 @@ public class SnakeController  {
         } catch (Exception e) {
             gameOver.setVisible(true);
             toData();
-
-
-         /*  if(score == null){
-                HighScore newScore=new HighScore(this.game, this.name1, gameState.getScore());
-                database.persist(newScore);
-                highScoreLabel.setText(String.valueOf(gameState.getScore()));
-            }
-            else if (gameState.getScore() > score.getScore()) {
-                database.update(score, gameState.getScore(), this.name1);
-                log.info("Highscore saved. {}",gameState.getScore());
-                highScoreLabel.setText(String.valueOf(gameState.getScore()));
-            }
-
-          */
-
         }
 
      }
 
+    /**
+     *
+     */
     public void snakeMove(KeyEvent keyEvent) {
         KeyCode code = keyEvent.getCode();
         String opposite = null;
@@ -222,16 +197,16 @@ public class SnakeController  {
         }
     }
 
+    /**
+     * Updating Score
+     */
     public void setScoreLabel() {
         scoreLabel.setText(String.valueOf(gameState.getScore()));
     }
 
-    public void setHighScore(){
-        if (statichighscore<gameState.getScore()){
-            statichighscore=gameState.getScore();
-        }
-    }
-
+    /**
+     * Saves Data to Database.
+     */
     public void toData(){
 
         Result newResult = new Result();
@@ -239,11 +214,14 @@ public class SnakeController  {
         newResult.setPlayer(PlayerName.getText());
         newResult.setScore(gameState.getScore());
 
-        resultRepository.AddNewTask(newResult);
+        resultRepository.AddNewResult(newResult);
 
 
     }
 
+    /**
+     * Set high score from Database
+     */
     public void fromData(){
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/ylm1Jk7dKv", "ylm1Jk7dKv", "XL6vysANrr");
@@ -261,36 +239,10 @@ public class SnakeController  {
             Logger.error("fromData error");
         }
     }
-/*
-    public void setScore() {
-        gameScore.setText("Score: " + gameState.getScore());
-    }
 
-    public void setResult() {
-
-        LocalDateTime now = LocalDateTime.now();
-        int year = now.getYear();
-        int month = now.getMonthValue();
-        int day = now.getDayOfMonth();
-        int hour = now.getHour();
-        int minute = now.getMinute();
-        int second = now.getSecond();
-
-        String timenow = year + "-" + month + "-" + day + "  " + hour + ":" + minute + ":" + (10>second ? "0" + second : second);
-
-        Result result = Result.builder()
-                .player(userName)
-                .score(gameState.getScore())
-                .date(timenow).build();
-
-        Long idd = dao.insert(result);
-
-        setHighScore();
-        System.out.println("Új sor a táblába: " + dao.findById(idd));
-    }
-
- */
-
+    /**
+     * Back button.
+     */
     public void switchToMenu(MouseEvent event) throws Exception {
         PageLoader.loadMenu(event);
         Logger.info("Back button is clicked.");

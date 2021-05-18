@@ -5,12 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.tinylog.Logger;
 
 import java.io.IOException;
 import java.util.Objects;
 
 /**
  * JavaFX App
+ * Init
  */
 public class App extends Application {
 
@@ -23,6 +25,7 @@ public class App extends Application {
         stage.setScene(new Scene (root));
         stage.setResizable(false);
         stage.show();
+        Logger.info("App is running");
 
     }
 }
