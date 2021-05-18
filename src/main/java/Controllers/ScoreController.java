@@ -49,6 +49,7 @@ public class ScoreController {
         tablePlayer.setCellValueFactory(new PropertyValueFactory<Result, String>("player"));
         tableScore.setCellValueFactory(new PropertyValueFactory<Result, Integer>("score"));
 
+        Logger.info("Score table is loaded");
         }
 
 
